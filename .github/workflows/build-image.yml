@@ -13,12 +13,26 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     permissions:
       contents: read
       packages: write
 
     steps:
       - uses: actions/checkout@v4
+
+      # 러너의 남은 디스크가 14GB 정도밖에 안 된다.
+      # 생물정보학 도구는 용량이 크므로 안 쓰는 것을 미리 지워 공간을 확보한다.
+      - name: 디스크 공간 확보
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          sudo rm -rf /usr/local/share/boost "$AGENT_TOOLSDIRECTORY"
+          df -h /
+
+      # 이 단계가 없으면 기본 docker 드라이버가 쓰이고,
+      # 그 드라이버는 캐시 내보내기를 지원하지 않아 빌드가 실패한다.
+      - name: Buildx 준비
+        uses: docker/setup-buildx-action@v3
 
       - uses: docker/login-action@v3
         with:
@@ -38,4 +52,4 @@ jobs:
             ghcr.io/${{ steps.owner.outputs.name }}/bioinfolab:2026a
             ghcr.io/${{ steps.owner.outputs.name }}/bioinfolab:latest
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-to: type=gha,mode=min
