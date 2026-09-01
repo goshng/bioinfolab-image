@@ -1,0 +1,8 @@
+# 10주차 유전체 조립 전용. bio 환경과 의존성이 충돌하므로 분리한다.
+name: assembly
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - shovill
+  - spades

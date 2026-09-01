@@ -1,0 +1,7 @@
+# 11주차 유전체 주석 전용. prokka는 perl 의존성이 많아 반드시 분리한다.
+name: annotation
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - prokka
