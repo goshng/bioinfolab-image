@@ -1,4 +1,4 @@
-# 매주 사용하는 기본 도구. 학생이 별도 활성화 없이 바로 쓸 수 있도록 PATH에 올린다.
+# 3단계 seq 이미지에 설치되는 서열 분석 도구
 name: bio
 channels:
   - conda-forge
@@ -10,9 +10,11 @@ dependencies:
   - matplotlib
   - numpy
   - seqkit
+  - blast
+  - mafft
+  - iqtree
+  - newick_utils
   - fastqc
   - fastp
-  - blast
   - sra-tools
-  - mafft
   - pigz
