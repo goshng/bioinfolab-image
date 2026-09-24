@@ -40,5 +40,7 @@ RUN set -eux; \
 # 새 터미널을 열 때마다 micromamba를 쓸 수 있도록 설정한다.
 RUN echo 'eval "$(micromamba shell hook --shell bash)"' >> /etc/bash.bashrc
 
+COPY cdhome.sh /tmp/cdhome.sh
+RUN cat /tmp/cdhome.sh >> /etc/bash.bashrc && rm /tmp/cdhome.sh
 USER vscode
 WORKDIR /workspaces
